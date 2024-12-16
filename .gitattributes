@@ -1,0 +1,14 @@
+* text=auto
+
+*.c eol=lf
+CMakeLists.txt eol=lf
+
+LICENSE eol=lf
+README eol=lf
+CHANGELOG eol=lf
+
+.editorconfig eol=lf
+
+.gitattributes eol=lf
+.gitmodules eol=lf
+.gitignore eol=lf
