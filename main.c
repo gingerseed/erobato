@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #define MIN_AGE 12
 #define MAX_AGE 46
@@ -33,7 +35,7 @@ static char* races[RACES_NUM] = {
 	"Ukrainian",
 	"African",
 	"Indian",
-	"Arabic"
+	"Arabian"
 };
 
 #define COLORS_SIZE 7
@@ -113,18 +115,18 @@ static char* gestures[GESTURES_SIZE] = {
 int rnd(int, int);
 char* combine(int, char const*, ...);
 void swap(char**, char**);
+long ntime();
 
 void main(void) {
-	srand(time(NULL));
+	srand(ntime() * getpid() % time(NULL));
 
 	int money = 1000;
 	int const age = rnd(MIN_AGE, MAX_AGE);
-	const char* type = age > 26 ? "woman" : "girl";
+	const char* type = age > 26 ? "woman" : age >= 18 ? "girl" : "teenage girl";
 
 	printf("Hello, adventurer!\n");
 	printf("You are playing with a %s %d years old %s %s.\n",
-		adjective[rnd(0, ADJECTIVES_SIZE - 1)], age,
-		races[rnd(1, RACES_NUM)], type);
+		adjective[rnd(0, ADJECTIVES_SIZE - 1)], age, races[rnd(1, RACES_NUM)], type);
 
 	int turns = TURNS_COUNT;
 	char* clothing[TURNS_COUNT] = {
@@ -266,4 +268,14 @@ void swap(char** a, char** b) {
 
 int rnd(int const min, int const max) {
 	return min + rand() % (max + 1 - min);
+}
+
+long ntime() {
+	struct timespec ts;
+
+	if (timespec_get(&ts, TIME_UTC) == 0) {
+		return UINT64_MAX;
+	}
+
+	return ts.tv_nsec;
 }
