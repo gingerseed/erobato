@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 
-#define MIN_AGE 12
+#define MIN_AGE 16
 #define MAX_AGE 46
 
 #define ADJECTIVES_SIZE 9
@@ -109,12 +109,6 @@ static char *gestures[GESTURES_SIZE] = {
 };
 
 #define TURNS_COUNT 6
-typedef struct {
-	int age;
-	char *clothing[TURNS_COUNT];
-} Person;
-
-Person* make();
 
 int rnd(int, int);
 char* combine(int, char const*, ...);
@@ -127,7 +121,7 @@ void main(void) {
 	int const age = rnd(MIN_AGE, MAX_AGE);
 
 	printf("Hello, adventurer!\n");
-	printf("You are playing with a %s %d years old %s %s.\n", adjective[rnd(0, ADJECTIVES_SIZE - 1)], age, races[rnd(1, RACES_NUM)], age > 26 ? "woman" : "girl");
+	printf("You are playing with a %s %d years old %s %s.\n", adjective[rnd(0, ADJECTIVES_SIZE - 1)], age, races[rnd(1, RACES_NUM - 1)], age > 26 ? "woman" : "girl");
 
 	int turns = TURNS_COUNT;
 	char *clothing[TURNS_COUNT] = {
@@ -214,20 +208,6 @@ void main(void) {
 	for (int i = 0; i < TURNS_COUNT; i++) {
 		free(clothing[i]);
 	}
-}
-
-Person* make() {
-	Person *person = malloc(sizeof(Person));
-	person->age = rnd(MIN_AGE, MAX_AGE);
-
-	person->clothing[] = {
-		combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier1[rnd(0, TIER1_SIZE - 1)], "panties"),
-		combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier2[rnd(0, TIER2_SIZE - 1)], "bra"),
-		combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier3[rnd(0, TIER3_SIZE - 1)], "skirt"),
-		combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier5[rnd(0, TIER5_SIZE - 1)], "top"),
-		combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier4[rnd(0, TIER4_SIZE - 1)]),
-		combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier6[rnd(0, TIER6_SIZE - 1)]),
-	};
 }
 
 char* combine(int const count, char const* sp, ...) {
