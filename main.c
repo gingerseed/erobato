@@ -112,7 +112,7 @@ static char* gestures[GESTURES_SIZE] = {
 
 int rnd(int, int);
 char* combine(int, char const*, ...);
-void swap(char*, char*);
+void swap(char**, char**);
 
 void main(void) {
 	srand(time(NULL));
@@ -195,7 +195,7 @@ void main(void) {
 		printf("You won!\n");
 
 		if (turns > 1 && rnd(0, 99) % 2 > 0) {
-			swap(clothing[turns - 1], clothing[turns - 2]);
+			swap(&clothing[turns - 1], &clothing[turns - 2]);
 		}
 
 		printf("She is slowly taking off her %s.\n", clothing[turns - 1]);
@@ -254,14 +254,14 @@ char* combine(int const count, char const* sp, ...) {
 }
 
 
-void swap(char* a, char* b) {
+void swap(char** a, char** b) {
 	if (a == b) {
 		return;
 	}
 
-	*a = *a + *b;
-	*b = *a - *b;
-	*a = *a - *b;
+	char* t = *a;
+	*a = *b;
+	*b = t;
 }
 
 int rnd(int const min, int const max) {
