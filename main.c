@@ -4,11 +4,11 @@
 #include <string.h>
 #include <time.h>
 
-#define MIN_AGE 16
+#define MIN_AGE 12
 #define MAX_AGE 46
 
 #define ADJECTIVES_SIZE 9
-static char *adjective[ADJECTIVES_SIZE] = {
+static char* adjective[ADJECTIVES_SIZE] = {
 	"shy",
 	"bashful",
 	"timorous",
@@ -21,7 +21,7 @@ static char *adjective[ADJECTIVES_SIZE] = {
 };
 
 #define RACES_NUM 12
-static char *races[RACES_NUM] = {
+static char* races[RACES_NUM] = {
 	"American",
 	"Asian",
 	"Filipino",
@@ -37,7 +37,7 @@ static char *races[RACES_NUM] = {
 };
 
 #define COLORS_SIZE 7
-static char *colors[COLORS_SIZE] = {
+static char* colors[COLORS_SIZE] = {
 	"white",
 	"red",
 	"blue",
@@ -48,7 +48,7 @@ static char *colors[COLORS_SIZE] = {
 };
 
 #define TIER1_SIZE 5
-static char *tier1[TIER1_SIZE] = {
+static char* tier1[TIER1_SIZE] = {
 	"cheeky",
 	"thong",
 	"bikini",
@@ -57,7 +57,7 @@ static char *tier1[TIER1_SIZE] = {
 };
 
 #define TIER2_SIZE 5
-static char *tier2[TIER2_SIZE] = {
+static char* tier2[TIER2_SIZE] = {
 	"bralette",
 	"push-up",
 	"strapless",
@@ -66,7 +66,7 @@ static char *tier2[TIER2_SIZE] = {
 };
 
 #define TIER3_SIZE 5
-static char *tier3[TIER3_SIZE] = {
+static char* tier3[TIER3_SIZE] = {
 	"circle",
 	"mini",
 	"slit",
@@ -75,7 +75,7 @@ static char *tier3[TIER3_SIZE] = {
 };
 
 #define TIER4_SIZE 5
-static char *tier4[TIER4_SIZE] = {
+static char* tier4[TIER4_SIZE] = {
 	"pantyhose",
 	"leggins",
 	"stockings",
@@ -84,7 +84,7 @@ static char *tier4[TIER4_SIZE] = {
 };
 
 #define TIER5_SIZE 5
-static char *tier5[TIER5_SIZE] = {
+static char* tier5[TIER5_SIZE] = {
 	"tank",
 	"cami",
 	"off-shoulder",
@@ -93,7 +93,7 @@ static char *tier5[TIER5_SIZE] = {
 };
 
 #define TIER6_SIZE 5
-static char *tier6[TIER6_SIZE] = {
+static char* tier6[TIER6_SIZE] = {
 	"sandals",
 	"trainers",
 	"platforms",
@@ -102,7 +102,7 @@ static char *tier6[TIER6_SIZE] = {
 };
 
 #define GESTURES_SIZE 3
-static char *gestures[GESTURES_SIZE] = {
+static char* gestures[GESTURES_SIZE] = {
 	"rock",
 	"paper",
 	"scissors",
@@ -112,19 +112,22 @@ static char *gestures[GESTURES_SIZE] = {
 
 int rnd(int, int);
 char* combine(int, char const*, ...);
-char* combine2(char const*, ...);
+void swap(char*, char*);
 
 void main(void) {
 	srand(time(NULL));
 
 	int money = 1000;
 	int const age = rnd(MIN_AGE, MAX_AGE);
+	const char* type = age > 26 ? "woman" : "girl";
 
 	printf("Hello, adventurer!\n");
-	printf("You are playing with a %s %d years old %s %s.\n", adjective[rnd(0, ADJECTIVES_SIZE - 1)], age, races[rnd(1, RACES_NUM - 1)], age > 26 ? "woman" : "girl");
+	printf("You are playing with a %s %d years old %s %s.\n",
+		adjective[rnd(0, ADJECTIVES_SIZE - 1)], age,
+		races[rnd(1, RACES_NUM)], type);
 
 	int turns = TURNS_COUNT;
-	char *clothing[TURNS_COUNT] = {
+	char* clothing[TURNS_COUNT] = {
 		combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier1[rnd(0, TIER1_SIZE - 1)], "panties"),
 		combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier2[rnd(0, TIER2_SIZE - 1)], "bra"),
 		combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier3[rnd(0, TIER3_SIZE - 1)], "skirt"),
@@ -155,16 +158,18 @@ void main(void) {
 		}
 
 		for (int i = 0; i < GESTURES_SIZE; i++) {
-			printf("[%d] -> %s\n", i, gestures[i]);
+			printf("[%d] -> %s\n", i + 1, gestures[i]);
 		}
 
 		printf("Your choose:");
-		while (scanf("%d", &p_move) != 1 || p_move < 0 || p_move > GESTURES_SIZE - 1) {
+		while (scanf("%d", &p_move) != 1 || p_move < 1 || p_move > GESTURES_SIZE) {
 			scanf("%*[^\n]");
 			printf("Your choose:");
 		}
 
+		p_move--;
 		printf("\n");
+
 		printf("You chose: %s\n", gestures[p_move]);
 		printf("You opponent chose: %s\n", gestures[o_move]);
 		printf("\n");
@@ -188,21 +193,27 @@ void main(void) {
 		}
 
 		printf("You won!\n");
+
+		if (turns > 1 && rnd(0, 99) % 2 > 0) {
+			swap(clothing[turns - 1], clothing[turns - 2]);
+		}
+
 		printf("She is slowly taking off her %s.\n", clothing[turns - 1]);
 		clothing[turns - 1][0] = '\0';
 
 		turns--;
 		continue;
 
-		lose:
+	lose:
 		printf("You lost! I will cost you $100.\n");
 		money -= 100;
 	}
 
 	if (money > 0) {
-		printf("\"Oh, you nailed it!\" - said the girl sitting totally naked in the %s pose.\n", adjective[rnd(0, ADJECTIVES_SIZE - 1)]);
+		printf("\"Oh, you nailed it!\" - said the %s sitting totally naked in the %s pose.\n",
+			type, adjective[rnd(0, ADJECTIVES_SIZE - 1)]);
 	} else {
-		printf("\"Such a loser\" - the girl laughing at you!\n");
+		printf("\"Such a loser\" - the %s is laughing at you!\n", type);
 	}
 
 	for (int i = 0; i < TURNS_COUNT; i++) {
@@ -212,7 +223,7 @@ void main(void) {
 
 char* combine(int const count, char const* sp, ...) {
 	long unsigned size = 1;
-	char* result = calloc(size , sizeof(char*));
+	char* result = calloc(size, sizeof(char*));
 
 	va_list p;
 	va_start(p, sp);
@@ -242,6 +253,17 @@ char* combine(int const count, char const* sp, ...) {
 	return result;
 }
 
-int rnd(int min, int max) {
-	return min + rand() % (max+1 - min);\
+
+void swap(char* a, char* b) {
+	if (a == b) {
+		return;
+	}
+
+	*a = *a + *b;
+	*b = *a - *b;
+	*a = *a - *b;
+}
+
+int rnd(int const min, int const max) {
+	return min + rand() % (max + 1 - min);
 }
