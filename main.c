@@ -103,6 +103,13 @@ static char* tier6[TIER6_SIZE] = {
 	"lita shoes",
 };
 
+#define TIER7_SIZE 4
+static char* tier7[TIER7_SIZE] = {
+	"shorts",
+	"jeans",
+	"trousers",
+};
+
 #define GESTURES_SIZE 3
 static char* gestures[GESTURES_SIZE] = {
 	"rock",
@@ -132,7 +139,11 @@ void main(void) {
 	char* clothing[TURNS_COUNT] = {
 		combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier1[rnd(0, TIER1_SIZE - 1)], "panties"),
 		combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier2[rnd(0, TIER2_SIZE - 1)], "bra"),
-		combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier3[rnd(0, TIER3_SIZE - 1)], "skirt"),
+
+		rnd(0, 99) % 2 > 0
+			? combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier3[rnd(0, TIER3_SIZE - 1)], "skirt")
+			: combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier7[rnd(0, TIER7_SIZE - 1)]),
+
 		combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier5[rnd(0, TIER5_SIZE - 1)], "top"),
 		combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier4[rnd(0, TIER4_SIZE - 1)]),
 		combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier6[rnd(0, TIER6_SIZE - 1)]),
@@ -254,7 +265,6 @@ char* combine(int const count, char const* sp, ...) {
 	va_end(p);
 	return result;
 }
-
 
 void swap(char** a, char** b) {
 	if (a == b) {
