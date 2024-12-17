@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 
-#define MIN_AGE 10
+#define MIN_AGE 12
 #define MAX_AGE 46
 
 #define ADJECTIVES_SIZE 9
@@ -20,11 +20,10 @@ static char *adjective[ADJECTIVES_SIZE] = {
 	"wanton",
 };
 
-#define RACES_NUM 10
+#define RACES_NUM 12
 static char *races[RACES_NUM] = {
 	"American",
 	"Asian",
-	"Chinese",
 	"Filipino",
 	"Slovenian",
 	"German",
@@ -32,6 +31,9 @@ static char *races[RACES_NUM] = {
 	"Spanish",
 	"Brazilian",
 	"Ukrainian",
+	"African",
+	"Indian",
+	"Arabic"
 };
 
 #define COLORS_SIZE 7
