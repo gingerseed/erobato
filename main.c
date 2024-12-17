@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 
-#define MIN_AGE 16
+#define MIN_AGE 10
 #define MAX_AGE 46
 
 #define ADJECTIVES_SIZE 9
@@ -18,6 +18,20 @@ static char *adjective[ADJECTIVES_SIZE] = {
 	"shameless",
 	"audacious",
 	"wanton",
+};
+
+#define RACES_NUM 10
+static char *races[RACES_NUM] = {
+	"American",
+	"Asian",
+	"Chinese",
+	"Filipino",
+	"Slovenian",
+	"German",
+	"French",
+	"Spanish",
+	"Brazilian",
+	"Ukrainian",
 };
 
 #define COLORS_SIZE 7
@@ -105,7 +119,7 @@ void main(void) {
 	int const age = rnd(MIN_AGE, MAX_AGE);
 
 	printf("Hello, adventurer!\n");
-	printf("You are playing with a %s %d years old %s.\n", adjective[rnd(0, ADJECTIVES_SIZE - 1)], age, age > 26 ? "woman" : "girl");
+	printf("You are playing with a %s %d years old %s %s.\n", adjective[rnd(0, ADJECTIVES_SIZE - 1)], age, races[rnd(1, RACES_NUM)], age > 26 ? "woman" : "girl");
 
 	int turns = TURNS_COUNT;
 	char *clothing[TURNS_COUNT] = {
