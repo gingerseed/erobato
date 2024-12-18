@@ -127,6 +127,7 @@ long ntime();
 typedef struct {
 	int age;
 	char* kind;
+	char** clothing;
 } Person;
 
 void main(void) {
@@ -143,7 +144,7 @@ void main(void) {
 		adjective[rnd(0, ADJECTIVES_SIZE - 1)], person->age, races[rnd(1, RACES_NUM)], person->kind);
 
 	int turns = TURNS_COUNT;
-	char* clothing[TURNS_COUNT] = {
+	char* temp[TURNS_COUNT] = {
 		combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier1[rnd(0, TIER1_SIZE - 1)], "panties"),
 		combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier2[rnd(0, TIER2_SIZE - 1)], "bra"),
 
@@ -156,14 +157,16 @@ void main(void) {
 		combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier6[rnd(0, TIER6_SIZE - 1)]),
 	};
 
+	person->clothing = &temp[0];
+
 	int p_move, o_move;
 	while (turns > 0 && money > 0) {
 		printf("\n");
 		printf("She is wearing: \n");
 
 		for (int i = 0; i < TURNS_COUNT; i++) {
-			if (strlen(clothing[i]) > 0) {
-				printf("* %s\n", clothing[i]);
+			if (strlen(person->clothing[i]) > 0) {
+				printf("* %s\n", person->clothing[i]);
 			}
 		}
 
@@ -215,11 +218,11 @@ void main(void) {
 		printf("You won!\n");
 
 		if (turns > 1 && rnd(0, 99) % 2 > 0) {
-			swap(&clothing[turns - 1], &clothing[turns - 2]);
+			swap(&person->clothing[turns - 1], &person->clothing[turns - 2]);
 		}
 
-		printf("She is slowly taking off her %s.\n", clothing[turns - 1]);
-		clothing[turns - 1][0] = '\0';
+		printf("She is slowly taking off her %s.\n", person->clothing[turns - 1]);
+		person->clothing[turns - 1][0] = '\0';
 
 		turns--;
 		continue;
@@ -237,8 +240,10 @@ void main(void) {
 	}
 
 	for (int i = 0; i < TURNS_COUNT; i++) {
-		free(clothing[i]);
+		free(person->clothing[i]);
 	}
+
+	free(person);
 }
 
 char* combine(int const count, char const* sp, ...) {
