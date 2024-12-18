@@ -110,6 +110,17 @@ static char* tier7[TIER7_SIZE] = {
 	"trousers",
 };
 
+#define TIER8_SIZE 8
+static char* tier8[TIER8_SIZE] = {
+	"jean jacket",
+	"rain slicker",
+	"short sleeve coat",
+	"biker jacket",
+	"cardigan",
+	"shirt",
+	"bomber jacket"
+};
+
 #define GESTURES_SIZE 3
 static char* gestures[GESTURES_SIZE] = {
 	"rock",
@@ -127,6 +138,7 @@ long ntime();
 typedef struct {
 	int age;
 	char* kind;
+	int count;
 	char** clothing;
 } Person;
 
@@ -145,14 +157,14 @@ int main(void) {
 	printf("You are playing with a %s %d years old %s %s.\n",
 		adjective[rnd(0, ADJECTIVES_SIZE - 1)], person->age, races[rnd(1, RACES_NUM)], person->kind);
 
-	int turns = TURNS_COUNT;
+	int turns = 0;
 
 	int p_move, o_move;
-	while (turns > 0 && money > 0) {
+	while (person->count > 0 && money > 0) {
 		printf("\n");
 		printf("She is wearing: \n");
 
-		for (int i = 0; i < TURNS_COUNT; i++) {
+		for (int i = 0; i < person->count; i++) {
 			if (strlen(person->clothing[i]) > 0) {
 				printf("* %s\n", person->clothing[i]);
 			}
@@ -162,7 +174,7 @@ int main(void) {
 		printf("\n");
 
 		printf("You have $%d.\n", money);
-		if (turns < TURNS_COUNT) {
+		if (turns > 0) {
 			printf("Are you ready for the next round?\n");
 		} else {
 			printf("Please make your move!\n");
@@ -205,17 +217,19 @@ int main(void) {
 
 		printf("You won!\n");
 
-		if (turns > 1 && rnd(0, 99) % 2 > 0) {
-			swap(&person->clothing[turns - 1], &person->clothing[turns - 2]);
+		if (person->count > 1 && rnd(0, 99) % 2 > 0) {
+			swap(&person->clothing[person->count - 1], &person->clothing[person->count - 2]);
 		}
 
-		printf("She is slowly taking off her %s.\n", person->clothing[turns - 1]);
-		person->clothing[turns - 1][0] = '\0';
+		printf("She is slowly taking off her %s.\n", person->clothing[person->count - 1]);
+		person->clothing[person->count - 1][0] = '\0';
 
-		turns--;
+		person->count--;
+		turns++;
+		
 		continue;
 
-	lose:
+		lose:
 		printf("You lost! I will cost you $100.\n");
 		money -= 100;
 	}
@@ -268,8 +282,6 @@ char* combine(int const count, char const* sp, ...) {
 	}
 
 	va_end(p);
-
-	printf(">>> %s\n", result);
 	return result;
 
 	error:
@@ -304,34 +316,41 @@ long ntime() {
 Person* new() {
 	Person* person = malloc(sizeof(Person));
 	if (!person) {
-		goto failed;
+		goto error;
 	}
 
 	person->age = rnd(MIN_AGE, MAX_AGE);
 	person->kind = person->age > 26 ? "woman" : person->age >= 18 ? "girl" : "teenage girl";
+	person->count = 0;
 
 	person->clothing = malloc(sizeof(char*) * TURNS_COUNT);
 	if (!person->clothing) {
-		goto failed;
+		goto error;
 	}
 
-	person->clothing[0] = combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier1[rnd(0, TIER1_SIZE - 1)], "panties");
-	person->clothing[1] = combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier2[rnd(0, TIER2_SIZE - 1)], "bra");
+	person->clothing[person->count++] = combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier1[rnd(0, TIER1_SIZE - 1)], "panties");
+	person->clothing[person->count++] = combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier2[rnd(0, TIER2_SIZE - 1)], "bra");
 
 	if (rnd(0, 99) % 2 > 0) {
-		person->clothing[2] = combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier3[rnd(0, TIER3_SIZE - 1)], "skirt");
+		person->clothing[person->count++] = combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier3[rnd(0, TIER3_SIZE - 1)], "skirt");
 	}else {
-		person->clothing[2] = combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier7[rnd(0, TIER7_SIZE - 1)]);
+		person->clothing[person->count++] = combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier7[rnd(0, TIER7_SIZE - 1)]);
 	}
 
-	person->clothing[3] = combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier5[rnd(0, TIER5_SIZE - 1)], "top");
-	person->clothing[4] = combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier4[rnd(0, TIER4_SIZE - 1)]);
-	person->clothing[5] = combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier6[rnd(0, TIER6_SIZE - 1)]);
+	person->clothing[person->count++] = combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier5[rnd(0, TIER5_SIZE - 1)], "top");
 
+	if (rnd(0, 99) % 3 < 1) {
+		person->clothing[person->count++] = combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier4[rnd(0, TIER4_SIZE - 1)]);
+	}
 
+	if (rnd(0, 99) % 3 > 1) {
+		person->clothing[person->count++] = combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier8[rnd(0, TIER8_SIZE - 1)]);
+	}
+
+	person->clothing[person->count++] = combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier6[rnd(0, TIER6_SIZE - 1)]);
 	return person;
 
-	failed:
+	error:
 	if (person != NULL) {
 		for (int i = 0; i < TURNS_COUNT; i++) {
 			free(person->clothing[i]);
