@@ -124,16 +124,23 @@ char* combine(int, char const*, ...);
 void swap(char**, char**);
 long ntime();
 
+typedef struct {
+	int age;
+	char* kind;
+} Person;
+
 void main(void) {
 	srand(ntime() * getpid() % time(NULL));
 
+	Person* person = malloc(sizeof(Person));
+	person->age = rnd(MIN_AGE, MAX_AGE);
+	person->kind = person->age > 26 ? "woman" : person->age >= 18 ? "girl" : "teenage girl";
+
 	int money = 1000;
-	int const age = rnd(MIN_AGE, MAX_AGE);
-	const char* type = age > 26 ? "woman" : age >= 18 ? "girl" : "teenage girl";
 
 	printf("Hello, adventurer!\n");
 	printf("You are playing with a %s %d years old %s %s.\n",
-		adjective[rnd(0, ADJECTIVES_SIZE - 1)], age, races[rnd(1, RACES_NUM)], type);
+		adjective[rnd(0, ADJECTIVES_SIZE - 1)], person->age, races[rnd(1, RACES_NUM)], person->kind);
 
 	int turns = TURNS_COUNT;
 	char* clothing[TURNS_COUNT] = {
@@ -224,9 +231,9 @@ void main(void) {
 
 	if (money > 0) {
 		printf("\"Oh, you nailed it!\" - said the %s sitting totally naked in the %s pose.\n",
-			type, adjective[rnd(0, ADJECTIVES_SIZE - 1)]);
+			person->kind, adjective[rnd(0, ADJECTIVES_SIZE - 1)]);
 	} else {
-		printf("\"Such a loser\" - the %s is laughing at you!\n", type);
+		printf("\"Such a loser\" - the %s is laughing at you!\n", person->kind);
 	}
 
 	for (int i = 0; i < TURNS_COUNT; i++) {
