@@ -143,6 +143,7 @@ typedef struct {
 } Person;
 
 Person* new();
+void takeoff(Person*);
 
 int main(void) {
 	srand(ntime() * getpid() % time(NULL));
@@ -216,17 +217,14 @@ int main(void) {
 		}
 
 		printf("You won!\n");
-
 		if (person->count > 1 && rnd(0, 99) % 2 > 0) {
 			swap(&person->clothing[person->count - 1], &person->clothing[person->count - 2]);
 		}
 
 		printf("She is slowly taking off her %s.\n", person->clothing[person->count - 1]);
-		person->clothing[person->count - 1][0] = '\0';
+		takeoff(person);
 
-		person->count--;
 		turns++;
-		
 		continue;
 
 		lose:
@@ -241,8 +239,8 @@ int main(void) {
 		printf("\"Such a loser\" - the %s is laughing at you!\n", person->kind);
 	}
 
-	for (int i = 0; i < TURNS_COUNT; i++) {
-		free(person->clothing[i]);
+	while (person->count > 0) {
+		takeoff(person);
 	}
 
 	free(person);
@@ -359,4 +357,13 @@ Person* new() {
 
 	free(person);
 	return NULL;
+}
+
+void takeoff(Person* person) {
+	if (person->count < 1) {
+		return;
+	}
+
+	free(person->clothing[person->count - 1]);
+	person->count--;
 }
