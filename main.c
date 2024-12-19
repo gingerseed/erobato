@@ -16,11 +16,13 @@ long ntime();
 int main(void) {
 	srand(ntime() * getpid() % time(NULL));
 
+	printf("START\n");
 	Person* person = new();
 	if (person == NULL) {
 		return 1;
 	}
 
+	printf("FINISH\n");
 	int money = 1000;
 
 	printf("You are playing with a %s %d years old %s %s.\n",

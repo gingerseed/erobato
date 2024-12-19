@@ -1,6 +1,6 @@
 #include "data.h"
 
-static char* adjective[ADJECTIVES_SIZE] = {
+char* adjective[ADJECTIVES_SIZE] = {
 	"shy",
 	"bashful",
 	"timorous",
@@ -12,7 +12,7 @@ static char* adjective[ADJECTIVES_SIZE] = {
 	"wanton",
 };
 
-static char* races[RACES_NUM] = {
+char* races[RACES_NUM] = {
 	"American",
 	"Asian",
 	"Filipino",
@@ -27,7 +27,7 @@ static char* races[RACES_NUM] = {
 	"Arabian"
 };
 
-static char* colors[COLORS_SIZE] = {
+char* colors[COLORS_SIZE] = {
 	"white",
 	"red",
 	"blue",
@@ -37,7 +37,7 @@ static char* colors[COLORS_SIZE] = {
 	"green"
 };
 
-static char* tier1[TIER1_SIZE] = {
+char* tier1[TIER1_SIZE] = {
 	"cheeky",
 	"thong",
 	"bikini",
@@ -45,7 +45,7 @@ static char* tier1[TIER1_SIZE] = {
 	"brief",
 };
 
-static char* tier2[TIER2_SIZE] = {
+char* tier2[TIER2_SIZE] = {
 	"bralette",
 	"push-up",
 	"strapless",
@@ -53,7 +53,7 @@ static char* tier2[TIER2_SIZE] = {
 	"bridal",
 };
 
-static char* tier3[TIER3_SIZE] = {
+char* tier3[TIER3_SIZE] = {
 	"circle",
 	"mini",
 	"slit",
@@ -61,7 +61,7 @@ static char* tier3[TIER3_SIZE] = {
 	"straight",
 };
 
-static char* tier4[TIER4_SIZE] = {
+char* tier4[TIER4_SIZE] = {
 	"pantyhose",
 	"leggins",
 	"stockings",
@@ -69,7 +69,7 @@ static char* tier4[TIER4_SIZE] = {
 	"long socks",
 };
 
-static char* tier5[TIER5_SIZE] = {
+char* tier5[TIER5_SIZE] = {
 	"tank",
 	"cami",
 	"off-shoulder",
@@ -77,7 +77,7 @@ static char* tier5[TIER5_SIZE] = {
 	"strapless",
 };
 
-static char* tier6[TIER6_SIZE] = {
+char* tier6[TIER6_SIZE] = {
 	"sandals",
 	"trainers",
 	"platforms",
@@ -85,13 +85,13 @@ static char* tier6[TIER6_SIZE] = {
 	"lita shoes",
 };
 
-static char* tier7[TIER7_SIZE] = {
+char* tier7[TIER7_SIZE] = {
 	"shorts",
 	"jeans",
 	"trousers",
 };
 
-static char* tier8[TIER8_SIZE] = {
+char* tier8[TIER8_SIZE] = {
 	"jean jacket",
 	"rain slicker",
 	"short sleeve coat",
@@ -101,7 +101,7 @@ static char* tier8[TIER8_SIZE] = {
 	"bomber jacket"
 };
 
-static char* gestures[GESTURES_SIZE] = {
+char* gestures[GESTURES_SIZE] = {
 	"rock",
 	"paper",
 	"scissors",
