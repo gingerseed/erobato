@@ -1,149 +1,17 @@
-#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <sys/types.h>
 #include <unistd.h>
-
-#define MIN_AGE 12
-#define MAX_AGE 46
-
-#define ADJECTIVES_SIZE 9
-static char* adjective[ADJECTIVES_SIZE] = {
-	"shy",
-	"bashful",
-	"timorous",
-	"confident",
-	"brash",
-	"coy",
-	"shameless",
-	"audacious",
-	"wanton",
-};
-
-#define RACES_NUM 12
-static char* races[RACES_NUM] = {
-	"American",
-	"Asian",
-	"Filipino",
-	"Slovenian",
-	"German",
-	"French",
-	"Spanish",
-	"Brazilian",
-	"Ukrainian",
-	"African",
-	"Indian",
-	"Arabian"
-};
-
-#define COLORS_SIZE 7
-static char* colors[COLORS_SIZE] = {
-	"white",
-	"red",
-	"blue",
-	"cyan",
-	"black",
-	"yellow",
-	"green"
-};
-
-#define TIER1_SIZE 5
-static char* tier1[TIER1_SIZE] = {
-	"cheeky",
-	"thong",
-	"bikini",
-	"tanga",
-	"brief",
-};
-
-#define TIER2_SIZE 5
-static char* tier2[TIER2_SIZE] = {
-	"bralette",
-	"push-up",
-	"strapless",
-	"beginner's",
-	"bridal",
-};
-
-#define TIER3_SIZE 5
-static char* tier3[TIER3_SIZE] = {
-	"circle",
-	"mini",
-	"slit",
-	"tulle",
-	"straight",
-};
-
-#define TIER4_SIZE 5
-static char* tier4[TIER4_SIZE] = {
-	"pantyhose",
-	"leggins",
-	"stockings",
-	"over-the-knee socks",
-	"long socks",
-};
-
-#define TIER5_SIZE 5
-static char* tier5[TIER5_SIZE] = {
-	"tank",
-	"cami",
-	"off-shoulder",
-	"crop",
-	"strapless",
-};
-
-#define TIER6_SIZE 5
-static char* tier6[TIER6_SIZE] = {
-	"sandals",
-	"trainers",
-	"platforms",
-	"clogs",
-	"lita shoes",
-};
-
-#define TIER7_SIZE 3
-static char* tier7[TIER7_SIZE] = {
-	"shorts",
-	"jeans",
-	"trousers",
-};
-
-#define TIER8_SIZE 8
-static char* tier8[TIER8_SIZE] = {
-	"jean jacket",
-	"rain slicker",
-	"short sleeve coat",
-	"biker jacket",
-	"cardigan",
-	"shirt",
-	"bomber jacket"
-};
-
-#define GESTURES_SIZE 3
-static char* gestures[GESTURES_SIZE] = {
-	"rock",
-	"paper",
-	"scissors",
-};
+#include "data.h"
+#include "person.h"
+#include "rnd.h"
 
 #define TURNS_COUNT 6
 
-int rnd(int, int);
-char* combine(int, char const*, ...);
 void swap(char**, char**);
 long ntime();
-
-typedef struct {
-	int age;
-	char* kind;
-	int count;
-	char** clothing;
-} Person;
-
-Person* new();
-void takeoff(Person*);
 
 int main(void) {
 	srand(ntime() * getpid() % time(NULL));
@@ -247,46 +115,6 @@ int main(void) {
 	return 0;
 }
 
-char* combine(int const count, char const* sp, ...) {
-	long unsigned size = 1;
-
-	char* result = malloc(size * sizeof(char*));
-	if (result == NULL) {
-		goto error;
-	}
-
-	va_list p;
-	va_start(p, sp);
-
-	for (int i = 0; i < count; i++) {
-		char const* frn = va_arg(p, char*);
-		size += strlen(frn);
-
-		if (i > 0) {
-			size += strlen(sp);
-		}
-
-		char* n = realloc(result, size * sizeof(char));
-		if (!n) {
-			goto error;
-		}
-
-		result = n;
-		if (i > 0) {
-			strcat(result, sp);
-		}
-
-		strcat(result, frn);
-	}
-
-	va_end(p);
-	return result;
-
-	error:
-	free(result);
-	return NULL;
-}
-
 void swap(char** a, char** b) {
 	if (a == b) {
 		return;
@@ -297,10 +125,6 @@ void swap(char** a, char** b) {
 	*b = t;
 }
 
-int rnd(int const min, int const max) {
-	return min + rand() % (max + 1 - min);
-}
-
 long ntime() {
 	struct timespec ts;
 
@@ -309,61 +133,4 @@ long ntime() {
 	}
 
 	return ts.tv_nsec;
-}
-
-Person* new() {
-	Person* person = malloc(sizeof(Person));
-	if (!person) {
-		goto error;
-	}
-
-	person->age = rnd(MIN_AGE, MAX_AGE);
-	person->kind = person->age > 26 ? "woman" : person->age >= 18 ? "girl" : "teenage girl";
-	person->count = 0;
-
-	person->clothing = malloc(sizeof(char*) * TURNS_COUNT);
-	if (!person->clothing) {
-		goto error;
-	}
-
-	person->clothing[person->count++] = combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier1[rnd(0, TIER1_SIZE - 1)], "panties");
-	person->clothing[person->count++] = combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier2[rnd(0, TIER2_SIZE - 1)], "bra");
-
-	if (rnd(0, 99) % 2 > 0) {
-		person->clothing[person->count++] = combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier3[rnd(0, TIER3_SIZE - 1)], "skirt");
-	}else {
-		person->clothing[person->count++] = combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier7[rnd(0, TIER7_SIZE - 1)]);
-	}
-
-	person->clothing[person->count++] = combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier5[rnd(0, TIER5_SIZE - 1)], "top");
-
-	if (rnd(0, 99) % 3 < 1) {
-		person->clothing[person->count++] = combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier4[rnd(0, TIER4_SIZE - 1)]);
-	}
-
-	if (rnd(0, 99) % 3 > 1) {
-		person->clothing[person->count++] = combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier8[rnd(0, TIER8_SIZE - 1)]);
-	}
-
-	person->clothing[person->count++] = combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier6[rnd(0, TIER6_SIZE - 1)]);
-	return person;
-
-	error:
-	if (person != NULL) {
-		for (int i = 0; i < TURNS_COUNT; i++) {
-			free(person->clothing[i]);
-		}
-	}
-
-	free(person);
-	return NULL;
-}
-
-void takeoff(Person* person) {
-	if (person->count < 1) {
-		return;
-	}
-
-	free(person->clothing[person->count - 1]);
-	person->count--;
 }
