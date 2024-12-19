@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <strings.h>
-#include "person.h"
 
 char* combine(int const count, char const* sp, ...) {
 	long unsigned size = 1;
@@ -41,4 +40,14 @@ char* combine(int const count, char const* sp, ...) {
 	error:
 	free(result);
 	return NULL;
+}
+
+void swap(char** a, char** b) {
+	if (a == b) {
+		return;
+	}
+
+	char* t = *a;
+	*a = *b;
+	*b = t;
 }

@@ -7,11 +7,11 @@
 #include "data.h"
 #include "person.h"
 #include "rnd.h"
+#include "strops.h"
+#include "timeops.h"
 
 #define TURNS_COUNT 6
 
-void swap(char**, char**);
-long ntime();
 
 int main(void) {
 	srand(ntime() * getpid() % time(NULL));
@@ -115,24 +115,4 @@ int main(void) {
 
 	free(person);
 	return 0;
-}
-
-void swap(char** a, char** b) {
-	if (a == b) {
-		return;
-	}
-
-	char* t = *a;
-	*a = *b;
-	*b = t;
-}
-
-long ntime() {
-	struct timespec ts;
-
-	if (timespec_get(&ts, TIME_UTC) == 0) {
-		return UINT64_MAX;
-	}
-
-	return ts.tv_nsec;
 }
