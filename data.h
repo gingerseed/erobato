@@ -10,9 +10,6 @@ extern char* adjective[ADJECTIVES_SIZE];
 #define RACES_NUM 12
 char* races[RACES_NUM];
 
-#define COLORS_SIZE 7
-char* colors[COLORS_SIZE];
-
 #define TIER1_SIZE 5
 char* tier1[TIER1_SIZE];
 

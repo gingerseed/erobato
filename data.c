@@ -27,16 +27,6 @@ char* races[RACES_NUM] = {
 	"Arabian"
 };
 
-char* colors[COLORS_SIZE] = {
-	"white",
-	"red",
-	"blue",
-	"cyan",
-	"black",
-	"yellow",
-	"green"
-};
-
 char* tier1[TIER1_SIZE] = {
 	"cheeky panties",
 	"thong panties",

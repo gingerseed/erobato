@@ -1,19 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include <sys/types.h>
-#include <unistd.h>
 #include "data.h"
 #include "person.h"
 #include "rnd.h"
 #include "strops.h"
-#include "timeops.h"
 
 #define TURNS_COUNT 6
 
 int main(void) {
-	srand(ntime() * getpid() % time(NULL));
+	randomize();
 
 	Person* person = new();
 	if (person == NULL) {
@@ -22,18 +19,18 @@ int main(void) {
 
 	int money = 1000;
 	printf("You are playing with a %s %d years old %s %s.\n",
-		adjective[rnd(0, ADJECTIVES_SIZE - 1)], person->age, races[rnd(1, RACES_NUM)], person->kind);
+		adjective[rnd(0, ADJECTIVES_SIZE - 1)], person->age, races[rnd(1, RACES_NUM - 1)], person->kind);
 
 	int turns = 0;
 
 	int p_move, o_move;
-	while (person->count > 0 && money > 0) {
+	while (person->values->length > 0 && money > 0) {
 		printf("\n");
 		printf("She is wearing: \n");
 
-		for (int i = 0; i < person->count; i++) {
-			if (strlen(person->clothing[i]) > 0) {
-				printf("* %s\n", person->clothing[i]);
+		for (int i = 0; i < person->values->length; i++) {
+			if (strlen(person->values->data[i]) > 0) {
+				printf("* %s\n", person->values->data[i]);
 			}
 		}
 
@@ -83,11 +80,11 @@ int main(void) {
 		}
 
 		printf("You won!\n");
-		if (person->count > 1 && rnd(0, 99) % 2 > 0) {
-			swap(&person->clothing[person->count - 1], &person->clothing[person->count - 2]);
+		if (person->values->length > 1 && rnd(0, 99) % 3 == 0) {
+			swap(&person->values->data[person->values->length - 1], &person->values->data[person->values->length - 2]);
 		}
 
-		printf("She is slowly taking off her %s.\n", person->clothing[person->count - 1]);
+		printf("She is slowly taking off her %s.\n", person->values->data[person->values->length - 1]);
 		takeoff(person);
 
 		turns++;
@@ -105,7 +102,7 @@ int main(void) {
 		printf("\"Such a loser\" - the %s is laughing at you!\n", person->kind);
 	}
 
-	while (person->count > 0) {
+	while (person->values->length > 0) {
 		takeoff(person);
 	}
 

@@ -1,14 +1,15 @@
 #ifndef PERSON_H
 #define PERSON_H
 
+#include "lists.h"
+
 typedef struct {
 	int age;
 	char* kind;
-	int count;
-	char** clothing;
+	List* values;
 } Person;
 
 Person* new();
-void takeoff(Person*);
+void takeoff(const Person*);
 
 #endif //PERSON_H

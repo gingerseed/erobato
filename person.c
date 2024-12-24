@@ -4,7 +4,7 @@
 #include "person.h"
 #include "data.h"
 #include "rnd.h"
-#include "arrops.h"
+#include "colors.h"
 
 #define WARDROBE_SIZE 6
 
@@ -15,35 +15,30 @@ Person* new() {
 	}
 
 	person->age = rnd(MIN_AGE, MAX_AGE);
-	person->kind = person->age > 26 ? "woman" : person->age >= 18 ? "girl" : "teenage girl";
-	person->count = 0;
+	person->kind = person->age > 42 ? "milf" : person->age > 26 ? "woman" : person->age >= 18 ? "girl" : "teenage girl";
+	person->values = make();
 
-	person->clothing = malloc(0);
-	if (person->clothing == NULL) {
-		goto error;
-	}
+	append2(person->values, combine(2, " ", pick_color(), tier1[rnd(0, TIER1_SIZE - 1)]));
 
-	append(&person->clothing, person->count++,combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier1[rnd(0, TIER1_SIZE - 1)]));
-	append(&person->clothing, person->count++,combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier2[rnd(0, TIER2_SIZE - 1)]));
+	append2(person->values, combine(2, " ", pick_color(), tier2[rnd(0, TIER2_SIZE - 1)]));
 
 	if (rnd(0, 99) % 2 > 0) {
-		append(&person->clothing, person->count++,combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier3[rnd(0, TIER3_SIZE - 1)]));
-	}else {
-		append(&person->clothing, person->count++,combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier7[rnd(0, TIER7_SIZE - 1)]));
+		append2(person->values, combine(2, " ", pick_color(), tier3[rnd(0, TIER3_SIZE - 1)]));
+	} else {
+		append2(person->values, combine(2, " ", pick_color(), tier7[rnd(0, TIER7_SIZE - 1)]));
 	}
 
-	append(&person->clothing, person->count++,combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier5[rnd(0, TIER5_SIZE - 1)]));
+	append2(person->values, combine(2, " ", pick_color(), tier5[rnd(0, TIER5_SIZE - 1)]));
 
 	if (rnd(0, 99) % 3 < 1) {
-		append(&person->clothing, person->count++,combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier4[rnd(0, TIER4_SIZE - 1)]));
+		append2(person->values, combine(2, " ", pick_color(), tier4[rnd(0, TIER4_SIZE - 1)]));
 	}
 
 	if (rnd(0, 99) % 3 > 1) {
-		append(&person->clothing, person->count++,combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier8[rnd(0, TIER8_SIZE - 1)]));
+		append2(person->values, combine(2, " ", pick_color(), tier8[rnd(0, TIER8_SIZE - 1)]));
 	}
 
-	append(&person->clothing, person->count++,combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier6[rnd(0, TIER6_SIZE - 1)]));
-
+	append2(person->values, combine(2, " ", pick_color(), tier6[rnd(0, TIER6_SIZE - 1)]));
 	return person;
 
 	error:
@@ -51,11 +46,11 @@ Person* new() {
 	return NULL;
 }
 
-void takeoff(Person* person) {
-	if (person->count < 1) {
+void takeoff(const Person* person) {
+	if (person->values->length < 1) {
 		return;
 	}
 
-	free(person->clothing[person->count - 1]);
-	person->count--;
+	free(person->values->data[person->values->length - 1]);
+	person->values->length--;
 }
