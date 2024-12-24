@@ -12,19 +12,15 @@
 
 #define TURNS_COUNT 6
 
-
 int main(void) {
 	srand(ntime() * getpid() % time(NULL));
 
-	printf("START\n");
 	Person* person = new();
 	if (person == NULL) {
 		return 1;
 	}
 
-	printf("FINISH\n");
 	int money = 1000;
-
 	printf("You are playing with a %s %d years old %s %s.\n",
 		adjective[rnd(0, ADJECTIVES_SIZE - 1)], person->age, races[rnd(1, RACES_NUM)], person->kind);
 
