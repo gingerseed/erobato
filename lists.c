@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 List* make() {
 	List* list = malloc(sizeof(List));
@@ -28,4 +29,13 @@ int append(List* list, char* value) {
 	list->data[list->length] = value;
 
 	return ++list->length;
+}
+
+int erase(List* list) {
+	if (list->length < 1) {
+		return -1;
+	}
+
+	free(list->data[--list->length]);
+	return list->length;
 }

@@ -10,6 +10,4 @@ typedef struct {
 } Person;
 
 Person* new();
-void takeoff(const Person*);
-
 #endif //PERSON_H

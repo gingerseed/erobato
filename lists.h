@@ -8,5 +8,6 @@ typedef struct {
 
 List* make() ;
 int append(List*, char*);
+int erase(List*);
 
 #endif //LISTS_H

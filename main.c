@@ -85,7 +85,7 @@ int main(void) {
 		}
 
 		printf("She is slowly taking off her %s.\n", person->values->data[person->values->length - 1]);
-		takeoff(person);
+		erase(person->values);
 
 		turns++;
 		continue;
@@ -103,7 +103,7 @@ int main(void) {
 	}
 
 	while (person->values->length > 0) {
-		takeoff(person);
+		erase(person->values);
 	}
 
 	free(person);

@@ -19,7 +19,6 @@ Person* new() {
 	person->values = make();
 
 	append(person->values, combine(2, " ", pick_color(), tier1[rnd(0, TIER1_SIZE - 1)]));
-
 	append(person->values, combine(2, " ", pick_color(), tier2[rnd(0, TIER2_SIZE - 1)]));
 
 	if (rnd(0, 99) % 2 > 0) {
@@ -44,13 +43,4 @@ Person* new() {
 	error:
 	free(person);
 	return NULL;
-}
-
-void takeoff(const Person* person) {
-	if (person->values->length < 1) {
-		return;
-	}
-
-	free(person->values->data[person->values->length - 1]);
-	person->values->length--;
 }
