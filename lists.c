@@ -18,7 +18,7 @@ List* make() {
 	return NULL;
 }
 
-int append2(List* list, char* value) {
+int append(List* list, char* value) {
 	char** tmp = realloc(list->data, sizeof(char*) * (list->length + 1));
 	if (tmp == NULL) {
 		return -1;

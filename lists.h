@@ -7,6 +7,6 @@ typedef struct {
 } List;
 
 List* make() ;
-int append2(List*, char*);
+int append(List*, char*);
 
 #endif //LISTS_H

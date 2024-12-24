@@ -18,27 +18,27 @@ Person* new() {
 	person->kind = person->age > 42 ? "milf" : person->age > 26 ? "woman" : person->age >= 18 ? "girl" : "teenage girl";
 	person->values = make();
 
-	append2(person->values, combine(2, " ", pick_color(), tier1[rnd(0, TIER1_SIZE - 1)]));
+	append(person->values, combine(2, " ", pick_color(), tier1[rnd(0, TIER1_SIZE - 1)]));
 
-	append2(person->values, combine(2, " ", pick_color(), tier2[rnd(0, TIER2_SIZE - 1)]));
+	append(person->values, combine(2, " ", pick_color(), tier2[rnd(0, TIER2_SIZE - 1)]));
 
 	if (rnd(0, 99) % 2 > 0) {
-		append2(person->values, combine(2, " ", pick_color(), tier3[rnd(0, TIER3_SIZE - 1)]));
+		append(person->values, combine(2, " ", pick_color(), tier3[rnd(0, TIER3_SIZE - 1)]));
 	} else {
-		append2(person->values, combine(2, " ", pick_color(), tier7[rnd(0, TIER7_SIZE - 1)]));
+		append(person->values, combine(2, " ", pick_color(), tier7[rnd(0, TIER7_SIZE - 1)]));
 	}
 
-	append2(person->values, combine(2, " ", pick_color(), tier5[rnd(0, TIER5_SIZE - 1)]));
+	append(person->values, combine(2, " ", pick_color(), tier5[rnd(0, TIER5_SIZE - 1)]));
 
 	if (rnd(0, 99) % 3 < 1) {
-		append2(person->values, combine(2, " ", pick_color(), tier4[rnd(0, TIER4_SIZE - 1)]));
+		append(person->values, combine(2, " ", pick_color(), tier4[rnd(0, TIER4_SIZE - 1)]));
 	}
 
 	if (rnd(0, 99) % 3 > 1) {
-		append2(person->values, combine(2, " ", pick_color(), tier8[rnd(0, TIER8_SIZE - 1)]));
+		append(person->values, combine(2, " ", pick_color(), tier8[rnd(0, TIER8_SIZE - 1)]));
 	}
 
-	append2(person->values, combine(2, " ", pick_color(), tier6[rnd(0, TIER6_SIZE - 1)]));
+	append(person->values, combine(2, " ", pick_color(), tier6[rnd(0, TIER6_SIZE - 1)]));
 	return person;
 
 	error:
