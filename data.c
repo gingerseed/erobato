@@ -38,27 +38,27 @@ char* colors[COLORS_SIZE] = {
 };
 
 char* tier1[TIER1_SIZE] = {
-	"cheeky",
-	"thong",
-	"bikini",
-	"tanga",
-	"brief",
+	"cheeky panties",
+	"thong panties",
+	"bikini panties",
+	"tanga panties",
+	"brief panties",
 };
 
 char* tier2[TIER2_SIZE] = {
-	"bralette",
-	"push-up",
-	"strapless",
-	"beginner's",
-	"bridal",
+	"bralette bra",
+	"push-up bra",
+	"strapless bra",
+	"beginner's bra",
+	"bridal bra",
 };
 
 char* tier3[TIER3_SIZE] = {
-	"circle",
-	"mini",
-	"slit",
-	"tulle",
-	"straight",
+	"circle skirt",
+	"mini skirt",
+	"slit skirt",
+	"tulle skirt",
+	"straight skirt",
 };
 
 char* tier4[TIER4_SIZE] = {
@@ -70,11 +70,11 @@ char* tier4[TIER4_SIZE] = {
 };
 
 char* tier5[TIER5_SIZE] = {
-	"tank",
-	"cami",
-	"off-shoulder",
-	"crop",
-	"strapless",
+	"tank top",
+	"cami top",
+	"off-shoulder top",
+	"crop top",
+	"strapless top",
 };
 
 char* tier6[TIER6_SIZE] = {

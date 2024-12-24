@@ -23,16 +23,16 @@ Person* new() {
 		goto error;
 	}
 
-	append(&person->clothing, person->count++,combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier1[rnd(0, TIER1_SIZE - 1)], "panties"));
-	append(&person->clothing, person->count++,combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier2[rnd(0, TIER2_SIZE - 1)], "bra"));
+	append(&person->clothing, person->count++,combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier1[rnd(0, TIER1_SIZE - 1)]));
+	append(&person->clothing, person->count++,combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier2[rnd(0, TIER2_SIZE - 1)]));
 
 	if (rnd(0, 99) % 2 > 0) {
-		append(&person->clothing, person->count++,combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier3[rnd(0, TIER3_SIZE - 1)], "skirt"));
+		append(&person->clothing, person->count++,combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier3[rnd(0, TIER3_SIZE - 1)]));
 	}else {
 		append(&person->clothing, person->count++,combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier7[rnd(0, TIER7_SIZE - 1)]));
 	}
 
-	append(&person->clothing, person->count++,combine(3, " ", colors[rnd(0, COLORS_SIZE - 1)], tier5[rnd(0, TIER5_SIZE - 1)], "top"));
+	append(&person->clothing, person->count++,combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier5[rnd(0, TIER5_SIZE - 1)]));
 
 	if (rnd(0, 99) % 3 < 1) {
 		append(&person->clothing, person->count++,combine(2, " ", colors[rnd(0, COLORS_SIZE - 1)], tier4[rnd(0, TIER4_SIZE - 1)]));
