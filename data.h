@@ -34,6 +34,9 @@ char* tier7[TIER7_SIZE];
 #define TIER8_SIZE 8
 char* tier8[TIER8_SIZE];
 
+#define SENTENCES_SIZE 12
+char* sentences[SENTENCES_SIZE];
+
 #define GESTURES_SIZE 3
 char* gestures[GESTURES_SIZE];
 

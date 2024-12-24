@@ -19,7 +19,7 @@ int main(void) {
 
 	int money = 1000;
 	printf("You are playing with a %s %d years old %s %s.\n",
-		adjective[rnd(0, ADJECTIVES_SIZE - 1)], person->age, races[rnd(1, RACES_NUM - 1)], person->kind);
+		adjective[rnd(0, ADJECTIVES_SIZE - 1)], person->age, races[rnd(0, RACES_NUM - 1)], person->kind);
 
 	int turns = 0;
 
@@ -80,6 +80,11 @@ int main(void) {
 		}
 
 		printf("You won!\n");
+
+		if (rnd(0, 99) % 5 > 0) {
+			printf("\"%s\"\n", sentences[rnd(0, SENTENCES_SIZE - 1)]);
+		}
+
 		if (person->values->length > 1 && rnd(0, 99) % 3 == 0) {
 			swap(&person->values->data[person->values->length - 1], &person->values->data[person->values->length - 2]);
 		}

@@ -91,6 +91,21 @@ char* tier8[TIER8_SIZE] = {
 	"bomber jacket"
 };
 
+char* sentences[SENTENCES_SIZE] = {
+	"Oh, damn, you caught me...",
+	"Fuck it!",
+	"You tricked me!",
+	"You just lucky.",
+	"No, fuck, not again!",
+	"Ok, whatever...",
+	"Shiiiiiiiiit!",
+	"I'm out of my luck today.",
+	"Happy? I'll nail the next one!",
+	"Lame...",
+	"That sucks.",
+	"I hope you like it...",
+};
+
 char* gestures[GESTURES_SIZE] = {
 	"rock",
 	"paper",
